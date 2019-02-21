@@ -5,18 +5,20 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public TurretBattery turretBattery;
+    public Vector3 shootAt;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        shootAt = new Vector3(0, 1, 0);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        GameObject enemy = GameObject.Find("Enemy");
+
         if(Input.GetMouseButtonDown(0)) {
-            turretBattery.fire(new Vector3(0,0,0));
+            shootAt = enemy.transform.position;
+            turretBattery.fire(shootAt);
         }
     }
 }
