@@ -20,6 +20,11 @@ public class Bolt : MonoBehaviour
         _rigidBody.angularVelocity = Vector3.zero;
     }
 
+    void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("bang");
+    }
+
     void Update()
     {
         
