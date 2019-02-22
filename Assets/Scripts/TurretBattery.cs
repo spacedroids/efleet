@@ -5,14 +5,27 @@ using UnityEngine;
 public class TurretBattery : MonoBehaviour
 {
     public BoltTurret boltTurret;
+    public List<BoltTurret> turrets;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        foreach(Transform child in gameObject.transform)
+        {
+            if(child.gameObject.CompareTag("Turret"))
+            {
+                turrets.Add(child.gameObject.GetComponent<BoltTurret>());
+            }
+        }
+    }
+
     void Update()
     {
         
     }
 
     public void fire(Vector3 direction) {
-        boltTurret.fire(direction);
+        foreach(BoltTurret turret in turrets) {
+            turret.fire(direction);
+        }
     }
 }

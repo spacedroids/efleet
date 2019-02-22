@@ -16,11 +16,10 @@ public class Bolt : MonoBehaviour
 
     void Start()
     {
-        _rigidBody.velocity = _transform.up * speed;
+        _rigidBody.velocity = _transform.forward * speed;
         _rigidBody.angularVelocity = Vector3.zero;
     }
 
-    // Update is called once per frame
     void Update()
     {
         

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoltTurret : MonoBehaviour
 {
     public static GameObject boltprefab;
-    public Vector3 rotateFix = new Vector3(0, 90, 0);
+    public Vector3 rotateFix = new Vector3(-90, 0, 0);
 
     void Awake()
     {
@@ -14,9 +14,7 @@ public class BoltTurret : MonoBehaviour
 
     public void fire(Vector3 direction)
     {
-        gameObject.transform.LookAt(direction);
-        //HACK - not sure why but lookat is always off by 90deg on X axis. A problem for another day.
-        gameObject.transform.Rotate(rotateFix);
+        gameObject.transform.LookAt(direction, Vector3.back);
         GameObject newShot = Object.Instantiate(boltprefab, gameObject.transform.position, gameObject.transform.rotation);
     }
 

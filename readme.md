@@ -1,0 +1,2 @@
+Using LookAt
+• LookAt rotates the object so that its forward vector points at the target. The forward vector is indicated by the blue vector in the Unity scene view. If objects are facing the way you expect, check that their forward vector is aligned with the facing of the model.
