@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public int health = 100;
     public TurretBattery turretBattery;
     public Vector3 shootAt;
 
