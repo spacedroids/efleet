@@ -22,9 +22,6 @@ public class GameController : MonoSingleton<GameController> {
     public GameObject smallExplosionPrefab;
     public GameObject mediumEnemyPrefab;
 
-    //Global variables for other classes/states
-    public int enemiesAlive;
-
 	//Navigation/Event Flags
 	public bool newGamePressed;
 

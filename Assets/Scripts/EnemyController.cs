@@ -34,11 +34,4 @@ public class EnemyController : Ship
         }
     }
 
-    public override void Kill()
-    {
-        if(--GameController.Instance.enemiesAlive < 0) { 
-            GameController.Instance.enemiesAlive = 0;
-        }
-        base.Kill();
-    }
 }
