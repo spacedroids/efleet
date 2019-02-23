@@ -22,10 +22,9 @@ public class GameplayState : GameState
 
     //Spawn a new medium enemy with a random offset from location 0,0
     private void spawnEnemy() {
-        Vector2 randomOffset = Random.insideUnitCircle;
+        Vector2 randomOffset = Random.insideUnitCircle * 2;
         Vector3 spawnPoint = randomOffset * 1f;
         GameObject newEmemy = Object.Instantiate(GameController.Instance.mediumEnemyPrefab, spawnPoint, Quaternion.identity);
-
     }
 
     public override void doUpdate(GameController gc)

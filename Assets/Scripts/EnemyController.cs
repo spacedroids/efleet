@@ -12,7 +12,7 @@ public class EnemyController : Ship
     void Start()
     {
         health = 100;
-        explosionScale = 0.3f;
+        explosionScale = 0.2f;
         enemy = GameObject.Find("Player");
     }
 
