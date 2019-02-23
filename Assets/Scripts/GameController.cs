@@ -20,6 +20,10 @@ public class GameController : MonoSingleton<GameController> {
 	public GameState nextStateOnLoaded;
 
     public GameObject smallExplosionPrefab;
+    public GameObject mediumEnemyPrefab;
+
+    //Global variables for other classes/states
+    public int enemiesAlive;
 
 	//Navigation/Event Flags
 	public bool newGamePressed;
@@ -33,6 +37,7 @@ public class GameController : MonoSingleton<GameController> {
 
 	protected override void Awake() {
         smallExplosionPrefab = (GameObject)Resources.Load("Explosions/SmallExplosion");
+        mediumEnemyPrefab = (GameObject)Resources.Load("Enemies/MediumEnemy");
 
         //Base 'MonoSingleton' class will setup this object as `DontDestroyOnLoad`
         base.Awake();

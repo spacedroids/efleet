@@ -7,7 +7,7 @@ public class Ship : MonoBehaviour
     public int health;
     public float explosionScale = 1f;
 
-    public void Damage(int amount)
+    public virtual void Damage(int amount)
     {
         health -= amount;
         if(health <= 0)
@@ -16,7 +16,7 @@ public class Ship : MonoBehaviour
         }
     }
 
-    public void Kill()
+    public virtual void Kill()
     {
         GameObject explosion = Object.Instantiate(GameController.Instance.smallExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
         explosion.transform.localScale = new Vector3(explosionScale, explosionScale, explosionScale);

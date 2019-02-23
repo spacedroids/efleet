@@ -8,6 +8,7 @@ public class GameplayState : GameState
 
     private bool playerDrag;
     private PlayerController player;
+    private int enemiesAlive;
 
     public override void enterState(GameController gc, GameState previousState = null)
     {
@@ -19,6 +20,15 @@ public class GameplayState : GameState
 
     public override void doUpdate(GameController gc)
     {
+        /* Level management */
+        if(GameController.Instance.enemiesAlive == 0) {
+            Vector2 randomOffset = Random.insideUnitCircle.normalized;
+            Vector3 spawnPoint = randomOffset * 1f;
+            GameObject newEmemy = Object.Instantiate(GameController.Instance.mediumEnemyPrefab, spawnPoint, Quaternion.identity);
+            GameController.Instance.enemiesAlive++;
+        }
+
+        /* Input logic */
         if(Input.GetMouseButtonDown(0))
         { // if left button pressed...
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -48,6 +58,7 @@ public class GameplayState : GameState
             }
         }
 
+        /* State change logic */
         if(gpsm.quitButtonPressed)
         {
             gpsm.quitButtonPressed = false;

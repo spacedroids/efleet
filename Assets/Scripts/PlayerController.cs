@@ -12,7 +12,7 @@ public class PlayerController : Ship
 
     void Start()
     {
-        health = 100;
+        health = 1000;
         explosionScale = 0.4f;
     }
 
@@ -31,7 +31,7 @@ public class PlayerController : Ship
         else
         {
             sinceLastShot = 0f;
-            enemy = GameObject.Find("Enemy");
+            enemy = GameObject.FindGameObjectWithTag("Enemy");
         }
 
     }

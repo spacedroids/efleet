@@ -33,4 +33,12 @@ public class EnemyController : Ship
             enemy = GameObject.Find("Player");
         }
     }
+
+    public override void Kill()
+    {
+        if(--GameController.Instance.enemiesAlive < 0) { 
+            GameController.Instance.enemiesAlive = 0;
+        }
+        base.Kill();
+    }
 }
