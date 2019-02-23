@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public int health = 100;
-    public float shotFrequency = 0.1f;
+    public float shotFrequency = 0.5f;
     public TurretBattery turretBattery;
     private float sinceLastShot;
     public GameObject enemy;
