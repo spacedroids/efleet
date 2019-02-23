@@ -19,8 +19,7 @@ public class GameController : MonoSingleton<GameController> {
 
 	public GameState nextStateOnLoaded;
 
-	//Storage manager for all reads/writes of data that needs to persist between game sessions.
-	//public DataStore storage;
+    public GameObject smallExplosionPrefab;
 
 	//Navigation/Event Flags
 	public bool newGamePressed;
@@ -33,8 +32,10 @@ public class GameController : MonoSingleton<GameController> {
 	}
 
 	protected override void Awake() {
-		//Base 'MonoSingleton' class will setup this object as `DontDestroyOnLoad`
-		base.Awake();
+        smallExplosionPrefab = (GameObject)Resources.Load("Explosions/SmallExplosion");
+
+        //Base 'MonoSingleton' class will setup this object as `DontDestroyOnLoad`
+        base.Awake();
 	}
 
 	void Start() {

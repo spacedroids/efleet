@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : Ship
 {
-    public int health = 100;
     public float shotFrequency = 0.5f;
     public TurretBattery turretBattery;
     private float sinceLastShot;
@@ -12,28 +11,27 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        health = 100;
+        explosionScale = 0.3f;
         enemy = GameObject.Find("Player");
     }
 
     void Update()
     {
-        sinceLastShot += Time.deltaTime;
-        if(sinceLastShot >= shotFrequency) {
-            Debug.Log("Firing at" + enemy);
-            Vector3 pos = enemy.transform.position;
-            turretBattery.fire(pos);
+        if(enemy != null)
+        {
+            sinceLastShot += Time.deltaTime;
+            if(sinceLastShot >= shotFrequency)
+            {
+                Vector3 pos = enemy.transform.position;
+                turretBattery.fire(pos);
+                sinceLastShot = 0f;
+            }
+        }
+        else
+        {
             sinceLastShot = 0f;
+            enemy = GameObject.Find("Player");
         }
-    }
-
-    public void Damage(int amount) {
-        health -= amount;
-        if(health <= 0) {
-            Kill();    
-        }
-    }
-
-    public void Kill() {
-        Destroy(gameObject);
     }
 }

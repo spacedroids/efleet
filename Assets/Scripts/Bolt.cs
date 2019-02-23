@@ -21,11 +21,18 @@ public class Bolt : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         Destroy(gameObject);
-        EnemyController damageRecipient = other.gameObject.GetComponent(typeof(EnemyController)) as EnemyController;
-        if(damageRecipient != null)
+        EnemyController enemy = other.gameObject.GetComponent(typeof(EnemyController)) as EnemyController;
+        PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
+        if(enemy != null)
         {
-            damageRecipient.Damage(50);
+            enemy.Damage(50);
         }
+        if(player != null)
+        {
+            player.Damage(50);
+        }
+        if(player == null)
+        { Debug.Log("nothing to damage"); }
     }
 
     void Update()
