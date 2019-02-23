@@ -654,6 +654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  explosionScale: 1
   shotFrequency: 0.5
   turretBattery: {fileID: 668626592}
   enemy: {fileID: 0}
@@ -1750,8 +1751,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  explosionScale: 1
   turretBattery: {fileID: 869176149}
-  shootAt: {x: 0, y: 0, z: 0}
+  shotFrequency: 0.5
+  enemy: {fileID: 0}
 --- !u!4 &2016860710
 Transform:
   m_ObjectHideFlags: 0

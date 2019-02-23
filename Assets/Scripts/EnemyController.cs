@@ -23,8 +23,7 @@ public class EnemyController : Ship
             sinceLastShot += Time.deltaTime;
             if(sinceLastShot >= shotFrequency)
             {
-                Vector3 pos = enemy.transform.position;
-                turretBattery.fire(pos);
+                turretBattery.fire(enemy.transform.position);
                 sinceLastShot = 0f;
             }
         }

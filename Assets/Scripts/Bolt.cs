@@ -31,8 +31,6 @@ public class Bolt : MonoBehaviour
         {
             player.Damage(50);
         }
-        if(player == null)
-        { Debug.Log("nothing to damage"); }
     }
 
     void Update()
