@@ -18,9 +18,6 @@ public class PlayerController : Ship
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)) {
-        }
-
         //Shooting logic
         if(enemy != null)
         {
