@@ -8,7 +8,7 @@ public class GameplayState : GameState
 
     private bool playerDrag;
     private PlayerController player;
-    private int enemiesAlive;
+    private int waveSize;
 
     public override void enterState(GameController gc, GameState previousState = null)
     {
@@ -16,16 +16,27 @@ public class GameplayState : GameState
         gpsm = GameObject.Find("GameplaySceneManager").GetComponent<GameplaySceneManager>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         player = GameObject.Find("Player").GetComponent<PlayerController>();
+        waveSize = 1;
+        GameController.Instance.enemiesAlive = 0;
+    }
+
+    //Spawn a new medium enemy with a random offset from location 0,0
+    private void spawnEnemy() {
+        Vector2 randomOffset = Random.insideUnitCircle;
+        Vector3 spawnPoint = randomOffset * 1f;
+        GameObject newEmemy = Object.Instantiate(GameController.Instance.mediumEnemyPrefab, spawnPoint, Quaternion.identity);
+
     }
 
     public override void doUpdate(GameController gc)
     {
         /* Level management */
         if(GameController.Instance.enemiesAlive == 0) {
-            Vector2 randomOffset = Random.insideUnitCircle.normalized;
-            Vector3 spawnPoint = randomOffset * 1f;
-            GameObject newEmemy = Object.Instantiate(GameController.Instance.mediumEnemyPrefab, spawnPoint, Quaternion.identity);
-            GameController.Instance.enemiesAlive++;
+            waveSize++; //It gets harder
+            while(GameController.Instance.enemiesAlive < waveSize) {
+                spawnEnemy();
+                GameController.Instance.enemiesAlive++;
+            }
         }
 
         /* Input logic */

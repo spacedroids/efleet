@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : Ship
 {
     public TurretBattery turretBattery;
-    public float shotFrequency = 0.5f;
+    public float shotFrequency = 0.2f;
 
     public GameObject enemy;
     private float sinceLastShot;
