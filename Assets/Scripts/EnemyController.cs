@@ -18,6 +18,7 @@ public class EnemyController : Ship
         healthGUI = Instantiate(GameController.Instance.healthGUI).GetComponent<HealthGUI>();
         healthGUI.target = gameObject;
         healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
+        healthGUI.updateText(health.ToString());
     }
 
     void Update()
@@ -36,6 +37,12 @@ public class EnemyController : Ship
             sinceLastShot = 0f;
             enemy = GameObject.Find("Player");
         }
+    }
+
+    public override void Damage(int amount)
+    {
+        base.Damage(amount);
+        healthGUI.updateText(health.ToString());
     }
 
     public override void Kill()
