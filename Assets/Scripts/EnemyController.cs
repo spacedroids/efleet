@@ -8,12 +8,16 @@ public class EnemyController : Ship
     public TurretBattery turretBattery;
     private float sinceLastShot;
     public GameObject enemy;
+    public HealthGUI healthGUI;
 
     void Start()
     {
         health = 100;
         explosionScale = 0.2f;
         enemy = GameObject.Find("Player");
+        healthGUI = Instantiate(GameController.Instance.healthGUI).GetComponent<HealthGUI>();
+        healthGUI.target = gameObject;
+        healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
     }
 
     void Update()
@@ -34,4 +38,9 @@ public class EnemyController : Ship
         }
     }
 
+    public override void Kill()
+    {
+        Destroy(healthGUI.gameObject);
+        base.Kill();
+    }
 }
