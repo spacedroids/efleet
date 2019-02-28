@@ -27,7 +27,7 @@ public class PlayerController : Ship
     void Update()
     {
         //Shooting logic
-        if(enemy != null)
+        if(enemy != null && !warpOverheated)
         {
             sinceLastShot += Time.deltaTime;
             if(sinceLastShot >= shotFrequency)
