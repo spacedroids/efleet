@@ -8,6 +8,8 @@ public class PlayerController : Ship
     public float shotFrequency = 0.2f;
 
     public GameObject enemy;
+    public HealthGUI healthGUI;
+
     private float sinceLastShot;
 
     public bool warpOverheated;
@@ -16,6 +18,10 @@ public class PlayerController : Ship
     {
         health = 1000;
         explosionScale = 0.4f;
+        healthGUI = Instantiate(GameController.Instance.healthGUI).GetComponent<HealthGUI>();
+        healthGUI.target = gameObject;
+        healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
+        healthGUI.updateText(health.ToString());
     }
 
     void Update()
@@ -38,6 +44,12 @@ public class PlayerController : Ship
 
     }
 
+    public override void Damage(int amount)
+    {
+        base.Damage(amount);
+        healthGUI.updateText(health.ToString());
+    }
+
     private IEnumerator warpCooldownCoroutine;
     public void warpCooldown() {
         warpCooldownCoroutine = coolDownWarp();
@@ -50,5 +62,4 @@ public class PlayerController : Ship
         Debug.Log("cooldown over");
         warpOverheated = false;
     }
-
 }
