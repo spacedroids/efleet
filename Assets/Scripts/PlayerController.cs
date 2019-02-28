@@ -10,6 +10,8 @@ public class PlayerController : Ship
     public GameObject enemy;
     private float sinceLastShot;
 
+    public bool warpOverheated;
+
     void Start()
     {
         health = 1000;
@@ -34,6 +36,19 @@ public class PlayerController : Ship
             enemy = GameObject.FindGameObjectWithTag("Enemy");
         }
 
+    }
+
+    private IEnumerator warpCooldownCoroutine;
+    public void warpCooldown() {
+        warpCooldownCoroutine = coolDownWarp();
+        StartCoroutine(warpCooldownCoroutine);
+    }
+
+    private IEnumerator coolDownWarp()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log("cooldown over");
+        warpOverheated = false;
     }
 
 }

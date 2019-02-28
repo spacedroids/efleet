@@ -43,7 +43,7 @@ public class GameplayState : GameState
             if(Physics.Raycast(ray, out RaycastHit hit))
             {
                 PlayerController playerHit = hit.transform.GetComponentInParent<PlayerController>();
-                if(playerHit) {
+                if(playerHit && !player.warpOverheated) {
                     playerDrag = true;
                 }
                 else
@@ -63,6 +63,8 @@ public class GameplayState : GameState
                  -mainCamera.transform.position.z));
                 player.transform.position = newPos;
                 playerDrag = false;
+                player.warpOverheated = true;
+                player.warpCooldown();
             }
         }
 
