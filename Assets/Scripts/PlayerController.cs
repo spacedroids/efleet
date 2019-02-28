@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : Ship
 {
     public TurretBattery turretBattery;
+    public SecondaryBattery missileBattery;
     public float shotFrequency = 0.2f;
 
     public GameObject enemy;
@@ -33,6 +34,7 @@ public class PlayerController : Ship
             if(sinceLastShot >= shotFrequency)
             {
                 turretBattery.fire(enemy.transform.position);
+                missileBattery.fire(enemy.transform.position);
                 sinceLastShot = 0f;
             }
         }

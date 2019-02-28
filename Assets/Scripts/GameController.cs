@@ -22,6 +22,9 @@ public class GameController : MonoSingleton<GameController> {
     public GameObject smallExplosionPrefab;
     public GameObject mediumEnemyPrefab;
     public GameObject healthGUI;
+    public GameObject missilePrefab;
+    public GameObject boltPrefab;
+    public GameObject enemyBoltPrefab;
 
 	//Navigation/Event Flags
 	public bool newGamePressed;
@@ -37,6 +40,9 @@ public class GameController : MonoSingleton<GameController> {
         smallExplosionPrefab = (GameObject)Resources.Load("Explosions/SmallExplosion");
         mediumEnemyPrefab = (GameObject)Resources.Load("Enemies/MediumEnemy");
         healthGUI = (GameObject)Resources.Load("GUI/HealthText");
+        boltPrefab = (GameObject)Resources.Load("Shots/Bolt");
+        enemyBoltPrefab = (GameObject)Resources.Load("Shots/EnemyBolt");
+        missilePrefab = (GameObject)Resources.Load("Shots/Missile");
 
         //Base 'MonoSingleton' class will setup this object as `DontDestroyOnLoad`
         base.Awake();

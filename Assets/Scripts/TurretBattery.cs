@@ -18,11 +18,6 @@ public class TurretBattery : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
     public void fire(Vector3 direction) {
         foreach(BoltTurret turret in turrets) {
             turret.fire(direction);
