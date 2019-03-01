@@ -62,6 +62,7 @@ public class GameplayState : GameState
                  Input.mousePosition.y,
                  -mainCamera.transform.position.z));
                 player.transform.position = newPos;
+                player.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
                 playerDrag = false;
                 player.warpCooldown();
             }
