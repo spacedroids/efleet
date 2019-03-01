@@ -6,14 +6,16 @@ public class PlayerController : Ship
 {
     public TurretBattery turretBattery;
     public SecondaryBattery missileBattery;
-    public float shotFrequency = 0.2f;
+    public float primaryShotFrequency = 0.2f;
 
     public GameObject enemy;
     public HealthGUI healthGUI;
 
-    private float sinceLastShot;
+    private float sinceLastPrimaryShot;
+    private float sinceLastSecondaryShot;
 
     public bool warpOverheated;
+    public bool secondaryOverheated;
 
     void Start()
     {
@@ -30,20 +32,27 @@ public class PlayerController : Ship
         //Shooting logic
         if(enemy != null && !warpOverheated)
         {
-            sinceLastShot += Time.deltaTime;
-            if(sinceLastShot >= shotFrequency)
+            sinceLastPrimaryShot += Time.deltaTime;
+            if(sinceLastPrimaryShot >= primaryShotFrequency)
             {
                 turretBattery.fire(enemy.transform.position);
-                missileBattery.fire(enemy.transform.position);
-                sinceLastShot = 0f;
+                sinceLastPrimaryShot = 0f;
+            }
+            //Missiles controlled by button press
+            if(GameController.Instance.missileButtonPressed || Input.GetKey("m")) {
+                if(!secondaryOverheated)
+                {
+                    GameController.Instance.missileButtonPressed = false;
+                    missileBattery.fire(enemy.transform.position);
+                    secondaryFireCooldown();
+                }
             }
         }
         else
         {
-            sinceLastShot = 0f;
+            sinceLastPrimaryShot = 0f;
             enemy = GameObject.FindGameObjectWithTag("Enemy");
         }
-
     }
 
     public override void Damage(int amount)
@@ -52,16 +61,33 @@ public class PlayerController : Ship
         healthGUI.updateText(health.ToString());
     }
 
+    /* Warp cool down coroutine logic */
     private IEnumerator warpCooldownCoroutine;
     public void warpCooldown() {
+        warpOverheated = true;
         warpCooldownCoroutine = coolDownWarp();
         StartCoroutine(warpCooldownCoroutine);
     }
-
     private IEnumerator coolDownWarp()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("cooldown over");
         warpOverheated = false;
     }
+
+    /* Secondary fire cool down coroutine logic */
+    private IEnumerator secondaryFireCooldownCoroutine;
+    public void secondaryFireCooldown()
+    {
+        secondaryOverheated = true;
+        secondaryFireCooldownCoroutine = coolDownSecondary();
+        StartCoroutine(secondaryFireCooldownCoroutine);
+    }
+
+    private IEnumerator coolDownSecondary()
+    {
+        yield return new WaitForSeconds(0.5f);
+        secondaryOverheated = false;
+    }
+
+
 }

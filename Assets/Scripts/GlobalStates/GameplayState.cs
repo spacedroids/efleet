@@ -63,7 +63,6 @@ public class GameplayState : GameState
                  -mainCamera.transform.position.z));
                 player.transform.position = newPos;
                 playerDrag = false;
-                player.warpOverheated = true;
                 player.warpCooldown();
             }
         }

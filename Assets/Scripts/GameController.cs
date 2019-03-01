@@ -27,7 +27,8 @@ public class GameController : MonoSingleton<GameController> {
     public GameObject enemyBoltPrefab;
 
 	//Navigation/Event Flags
-	public bool newGamePressed;
+    public bool newGamePressed;
+    public bool missileButtonPressed;
 
 	//Instantiate each of the state subclasses. We want to do this once and keep the same copy, every state change just reuses the object.
 	private void InstantiateStateClasses(){

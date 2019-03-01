@@ -46,4 +46,8 @@ public class GameplaySceneManager : MonoBehaviour
     public void QuitButtonClick() {
         quitButtonPressed = true;
     }
+
+    public void MissileButtonClick() {
+        GameController.Instance.missileButtonPressed = true;
+    }
 }
