@@ -23,6 +23,7 @@ public class Ship : MonoBehaviour
             }
             else
             {
+                shieldHealth = 0;
                 LowerShields();
             }
         } else {

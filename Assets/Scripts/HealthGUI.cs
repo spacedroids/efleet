@@ -6,17 +6,15 @@ using UnityEngine.UI;
 public class HealthGUI : MonoBehaviour
 {
     public GameObject target;
-    private Text textComponent;
+    public Text hullHealthTxt;
+    public Text shieldHealthTxt;
     public Vector3 offset; //amount to offset from target so that it floats to the side of the target
 
     private void Awake()
     {
-        textComponent = gameObject.GetComponent<Text>();
-        offset = new Vector3(-20, 0, 0);
-    }
-
-    void Start()
-    {
+        offset = new Vector3(-40, 0, 0);
+        shieldHealthTxt.text = "";
+        hullHealthTxt.text = "";
     }
 
     void Update()
@@ -25,7 +23,12 @@ public class HealthGUI : MonoBehaviour
         transform.position += offset;
     }
 
-    public void updateText(string newText) {
-        textComponent.text = newText;
+    public void updateText(string shieldHealth, string hullHealth) {
+        hullHealthTxt.text = hullHealth;
+        shieldHealthTxt.text = shieldHealth;
+    }
+
+    public void updateHullHealth(string newText) {
+        hullHealthTxt.text = newText;
     }
 }

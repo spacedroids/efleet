@@ -20,7 +20,7 @@ public class EnemyController : Ship
         healthGUI = Instantiate(GameController.Instance.healthGUI).GetComponent<HealthGUI>();
         healthGUI.target = gameObject;
         healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
-        healthGUI.updateText(health.ToString());
+        healthGUI.updateText(shieldHealth.ToString(), health.ToString());
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class EnemyController : Ship
     public override void Damage(int amount, GameObject componentHit, float energyMultipler)
     {
         base.Damage(amount, componentHit, energyMultipler);
-        healthGUI.updateText(health.ToString());
+        healthGUI.updateText(shieldHealth.ToString(), health.ToString());
     }
 
     public override void LowerShields()

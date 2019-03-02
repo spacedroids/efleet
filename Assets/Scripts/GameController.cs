@@ -40,7 +40,7 @@ public class GameController : MonoSingleton<GameController> {
 	protected override void Awake() {
         smallExplosionPrefab = (GameObject)Resources.Load("Explosions/SmallExplosion");
         mediumEnemyPrefab = (GameObject)Resources.Load("Enemies/MediumEnemy");
-        healthGUI = (GameObject)Resources.Load("GUI/HealthText");
+        healthGUI = (GameObject)Resources.Load("GUI/HealthGUI");
         boltPrefab = (GameObject)Resources.Load("Shots/Bolt");
         enemyBoltPrefab = (GameObject)Resources.Load("Shots/EnemyBolt");
         missilePrefab = (GameObject)Resources.Load("Shots/Missile");
