@@ -10,26 +10,42 @@ public class Ship : MonoBehaviour
     public int maxShieldHealth;
     public float explosionScale = 1f;
 
-    public virtual void Damage(int amount)
+    //Amount of damage, component to determine if shield or hull, energy multiplier to do extra/less damage to shields/hull
+    public virtual void Damage(int amount, GameObject componentHit, float energyMultipler)
     {
-        shieldHealth -= amount; //Damage shields first
-        if(shieldHealth > 0) {
-            //If shields still hold, we're done
-            return;
+        if(componentHit.CompareTag("Shield")) {
+            //Energy multiplier > 1 means extra damage to shields
+            shieldHealth -= (int)(amount * energyMultipler);
+            if(shieldHealth > 0)
+            {
+                //If shields still hold, we're done
+                return;
+            }
+            else
+            {
+                LowerShields();
+            }
         } else {
-            LowerShields();
-            if(shieldHealth < 0) {
-                //There is spillover damage
-                health += shieldHealth; //shieldhealth is negative at this point
-                if(health <= 0)
-                {
-                    Kill();
-                }
-                shieldHealth = 0; //reset shields to 0
+            //Energy multiplier < 1 means extra damage to hull
+            health -= (int)(amount / energyMultipler);
+            if(health <= 0)
+            {
+                Kill();
             }
         }
 
     }
+
+    /* Code to re introduce to deal with shield spillover if desired */
+    //if(shieldHealth < 0) {
+    //    //There is spillover damage
+    //    health += shieldHealth; //shieldhealth is negative at this point
+    //    if(health <= 0)
+    //    {
+    //        Kill();
+    //    }
+    //    shieldHealth = 0; //reset shields to 0
+    //}
 
     public virtual void LowerShields() { }
 

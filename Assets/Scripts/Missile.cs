@@ -6,6 +6,8 @@ public class Missile : MonoBehaviour
 {
     public Rigidbody _rigidBody;
     public float speed = 0.05f;
+    public int damage = 200;
+    public float energyDamageBonus = 0.1f;
 
     void Awake()
     {
@@ -30,11 +32,11 @@ public class Missile : MonoBehaviour
         PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
         if(enemy != null)
         {
-            enemy.Damage(50);
+            enemy.Damage(damage, other.gameObject, energyDamageBonus);
         }
         if(player != null)
         {
-            player.Damage(50);
+            player.Damage(damage, other.gameObject, energyDamageBonus);
         }
     }
 }

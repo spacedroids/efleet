@@ -13,8 +13,8 @@ public class EnemyController : Ship
 
     void Start()
     {
-        health = 1000;
-        shieldHealth = 100;
+        health = 500;
+        shieldHealth = 1000;
         explosionScale = 0.2f;
         enemy = GameObject.Find("Player");
         healthGUI = Instantiate(GameController.Instance.healthGUI).GetComponent<HealthGUI>();
@@ -41,9 +41,9 @@ public class EnemyController : Ship
         }
     }
 
-    public override void Damage(int amount)
+    public override void Damage(int amount, GameObject componentHit, float energyMultipler)
     {
-        base.Damage(amount);
+        base.Damage(amount, componentHit, energyMultipler);
         healthGUI.updateText(health.ToString());
     }
 

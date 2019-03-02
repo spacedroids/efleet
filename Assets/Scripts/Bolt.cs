@@ -5,7 +5,9 @@ using UnityEngine;
 public class Bolt : MonoBehaviour
 {
     public Rigidbody _rigidBody;
-    public float speed = 3;
+    private float speed = 2;
+    private float energyDamageBonus = 5f;
+    private int damage = 20;
 
     void Awake()
     {
@@ -24,11 +26,11 @@ public class Bolt : MonoBehaviour
         PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
         if(enemy != null)
         {
-            enemy.Damage(50);
+            enemy.Damage(damage, other.gameObject, energyDamageBonus);
         }
         if(player != null)
         {
-            player.Damage(50);
+            player.Damage(damage, other.gameObject, energyDamageBonus);
         }
         //Destroy self
         Destroy(gameObject);

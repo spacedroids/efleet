@@ -124,7 +124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 0}
-  speed: 2
+  speed: 3
+  energyDamageBonus: 10
+  damage: 10
 --- !u!54 &5910228284759303547
 Rigidbody:
   m_ObjectHideFlags: 0

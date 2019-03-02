@@ -55,9 +55,9 @@ public class PlayerController : Ship
         }
     }
 
-    public override void Damage(int amount)
+    public override void Damage(int amount, GameObject componentHit, float energyMultipler)
     {
-        base.Damage(amount);
+        base.Damage(amount, componentHit, energyMultipler);
         healthGUI.updateText(health.ToString());
     }
 
