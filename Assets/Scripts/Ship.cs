@@ -5,16 +5,33 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     public int health;
+    public int maxHealth;
+    public int shieldHealth;
+    public int maxShieldHealth;
     public float explosionScale = 1f;
 
     public virtual void Damage(int amount)
     {
-        health -= amount;
-        if(health <= 0)
-        {
-            Kill();
+        shieldHealth -= amount; //Damage shields first
+        if(shieldHealth > 0) {
+            //If shields still hold, we're done
+            return;
+        } else {
+            LowerShields();
+            if(shieldHealth < 0) {
+                //There is spillover damage
+                health += shieldHealth; //shieldhealth is negative at this point
+                if(health <= 0)
+                {
+                    Kill();
+                }
+                shieldHealth = 0; //reset shields to 0
+            }
         }
+
     }
+
+    public virtual void LowerShields() { }
 
     public virtual void Kill()
     {

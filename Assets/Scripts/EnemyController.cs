@@ -9,10 +9,12 @@ public class EnemyController : Ship
     private float sinceLastShot;
     public GameObject enemy;
     public HealthGUI healthGUI;
+    public GameObject shield;
 
     void Start()
     {
-        health = 100;
+        health = 1000;
+        shieldHealth = 100;
         explosionScale = 0.2f;
         enemy = GameObject.Find("Player");
         healthGUI = Instantiate(GameController.Instance.healthGUI).GetComponent<HealthGUI>();
@@ -43,6 +45,11 @@ public class EnemyController : Ship
     {
         base.Damage(amount);
         healthGUI.updateText(health.ToString());
+    }
+
+    public override void LowerShields()
+    {
+        shield.SetActive(false);
     }
 
     public override void Kill()

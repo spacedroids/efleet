@@ -20,9 +20,13 @@ public class Bolt : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        Destroy(gameObject);
         EnemyController enemy = other.gameObject.GetComponent(typeof(EnemyController)) as EnemyController;
         PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
+        if(other.gameObject.CompareTag("Shield"))
+        {
+            //The shield gameobject (with its collider) is a child of the enemy ship where the script is attached
+            enemy = other.gameObject.GetComponentInParent<EnemyController>() as EnemyController;
+        }
         if(enemy != null)
         {
             enemy.Damage(50);
@@ -31,6 +35,8 @@ public class Bolt : MonoBehaviour
         {
             player.Damage(50);
         }
+        //Destroy self
+        Destroy(gameObject);
     }
 
     void Update()
