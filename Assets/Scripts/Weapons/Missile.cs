@@ -5,9 +5,9 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
     public Rigidbody _rigidBody;
-    public float speed = 0.05f;
-    public int damage = 200;
-    public float energyDamageBonus = 0.1f;
+    protected float speed = 0.2f;
+    protected int damage = 200;
+    protected float energyDamageBonus = 0.1f;
 
     void Awake()
     {
@@ -16,7 +16,7 @@ public class Missile : MonoBehaviour
 
     void Start()
     {
-        _rigidBody.velocity = transform.forward * speed;
+        _rigidBody.velocity = transform.forward * speed * 3;
         _rigidBody.angularVelocity = Vector3.zero;
     }
 

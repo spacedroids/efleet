@@ -44,6 +44,7 @@ public class GameController : MonoSingleton<GameController> {
         boltPrefab = (GameObject)Resources.Load("Shots/Bolt");
         enemyBoltPrefab = (GameObject)Resources.Load("Shots/EnemyBolt");
         missilePrefab = (GameObject)Resources.Load("Shots/Missile");
+        //missilePrefab = (GameObject)Resources.Load("Shots/Torpedo");
 
         //Base 'MonoSingleton' class will setup this object as `DontDestroyOnLoad`
         base.Awake();

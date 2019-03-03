@@ -35,7 +35,7 @@ public class PlayerController : Ship
             sinceLastPrimaryShot += Time.deltaTime;
             if(sinceLastPrimaryShot >= primaryShotFrequency)
             {
-                turretBattery.fire(enemy.transform.position);
+                //turretBattery.fire(enemy.transform.position);
                 sinceLastPrimaryShot = 0f;
             }
             //Missiles controlled by button press
