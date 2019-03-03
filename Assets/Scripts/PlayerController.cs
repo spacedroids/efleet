@@ -27,7 +27,7 @@ public class PlayerController : Ship
         healthGUI.updateHullHealth(health.ToString());
     }
 
-    void Update()
+    public override void Update()
     {
         //Shooting logic
         if(enemy != null && !warpOverheated)

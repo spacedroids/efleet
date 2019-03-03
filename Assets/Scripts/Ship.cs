@@ -57,4 +57,6 @@ public class Ship : MonoBehaviour
         Destroy(explosion, 2);
         Destroy(gameObject);
     }
+
+    public virtual void Update() { }
 }
