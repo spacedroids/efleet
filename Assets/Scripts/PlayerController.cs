@@ -14,8 +14,14 @@ public class PlayerController : Ship
     private float sinceLastPrimaryShot;
     private float sinceLastSecondaryShot;
 
+    private bool openFirePrimary;
+    private Vector3 fireZonePos;
+
+    public bool autoFireMode = true;
+
     public bool warpOverheated;
     public bool secondaryOverheated;
+    public bool primaryOverheated;
 
     public override void Start()
     {
@@ -33,11 +39,10 @@ public class PlayerController : Ship
         //Shooting logic
         if(enemy != null && !warpOverheated)
         {
-            sinceLastPrimaryShot += Time.deltaTime;
-            if(sinceLastPrimaryShot >= primaryShotFrequency)
+            if(autoFireMode && !primaryOverheated)
             {
                 turretBattery.fire(enemy.transform.position);
-                sinceLastPrimaryShot = 0f;
+                primaryFireCooldown();
             }
             //Missiles controlled by button press
             if(GameController.Instance.missileButtonPressed || Input.GetKey("m")) {
@@ -54,12 +59,30 @@ public class PlayerController : Ship
             sinceLastPrimaryShot = 0f;
             enemy = GameObject.FindGameObjectWithTag("Enemy");
         }
+
+        /* Fire zone gameplay test */
+        if(openFirePrimary && !primaryOverheated)
+        {
+            turretBattery.fire(fireZonePos);
+            primaryFireCooldown();
+        }
+
     }
 
     public override void Damage(int amount, float energyMultipler)
     {
         base.Damage(amount, energyMultipler);
         healthGUI.updateHullHealth(health.ToString());
+    }
+
+    public void shootAtZone(Vector3 target) {
+        openFirePrimary = true;
+        fireZonePos = target;
+    }
+
+    public void stopZoneShooting()
+    {
+        openFirePrimary = false;
     }
 
     /* Warp cool down coroutine logic */
@@ -75,6 +98,18 @@ public class PlayerController : Ship
         warpOverheated = false;
     }
 
+    /* Primary fire cool down coroutine logic */
+    private IEnumerator primaryFireCooldownCoroutine;
+    public void primaryFireCooldown() {
+        primaryOverheated = true;
+        primaryFireCooldownCoroutine = coolDownPrimary();
+        StartCoroutine(primaryFireCooldownCoroutine);
+    }
+    private IEnumerator coolDownPrimary() {
+        yield return new WaitForSeconds(primaryShotFrequency);
+        primaryOverheated = false;
+    }
+
     /* Secondary fire cool down coroutine logic */
     private IEnumerator secondaryFireCooldownCoroutine;
     public void secondaryFireCooldown()
@@ -83,7 +118,6 @@ public class PlayerController : Ship
         secondaryFireCooldownCoroutine = coolDownSecondary();
         StartCoroutine(secondaryFireCooldownCoroutine);
     }
-
     private IEnumerator coolDownSecondary()
     {
         yield return new WaitForSeconds(0.5f);

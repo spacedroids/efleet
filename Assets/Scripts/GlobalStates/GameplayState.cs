@@ -7,8 +7,11 @@ public class GameplayState : GameState
     private Camera mainCamera;
 
     private bool playerDragActive;
+    private bool fireZoneDragActive;
     private PlayerController player;
     private int waveSize;
+
+    private GameObject playerFireZoneUI;
 
     public override void enterState(GameController gc, GameState previousState = null)
     {
@@ -16,6 +19,7 @@ public class GameplayState : GameState
         gpsm = GameObject.Find("GameplaySceneManager").GetComponent<GameplaySceneManager>();
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         player = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerFireZoneUI = GameObject.Find("PlayerFireZone");
         waveSize = 1;
     }
 
@@ -58,12 +62,27 @@ public class GameplayState : GameState
                     playerDragActive = true;
                 }
             } else {
-                //If non player tap, do weapon targeting
-
+                //If non player tap, do fire zone targeting
+                playerFireZoneUI.SetActive(true);
+                fireZoneDragActive = true;
             }
+        }
+        //While holding down for fire zone
+        if(fireZoneDragActive) {
+            playerFireZoneUI.transform.position = Input.mousePosition;
+            Vector3 clickPosition = mainCamera.ScreenToWorldPoint(
+             new Vector3(Input.mousePosition.x,
+             Input.mousePosition.y,
+             -mainCamera.transform.position.z));
+            player.shootAtZone(clickPosition);
         }
         if(Input.GetMouseButtonUp(0))
         {
+            if(fireZoneDragActive) {
+                fireZoneDragActive = false;
+                //playerFireZoneUI.SetActive(false);
+                //player.stopZoneShooting();
+            }
             if(playerDragActive) {
                 //Convert from screen to world space. Assumes gameplay plane is at z=0.
                 Vector3 newPos = mainCamera.ScreenToWorldPoint(
