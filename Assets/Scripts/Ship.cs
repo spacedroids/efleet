@@ -10,15 +10,17 @@ public class Ship : MonoBehaviour
     public int maxShieldHealth;
     public float explosionScale = 1f;
     protected Rigidbody _rigidbody;
+    protected bool shieldsUp = false;
 
     public virtual void Start() {
         _rigidbody = gameObject.GetComponent<Rigidbody>();
+        shieldsUp = true;
     }
 
     //Amount of damage, component to determine if shield or hull, energy multiplier to do extra/less damage to shields/hull
-    public virtual void Damage(int amount, GameObject componentHit, float energyMultipler)
+    public virtual void Damage(int amount, float energyMultipler)
     {
-        if(componentHit.CompareTag("Shield")) {
+        if(shieldsUp) {
             //Energy multiplier > 1 means extra damage to shields
             shieldHealth -= (int)(amount * energyMultipler);
             if(shieldHealth > 0)
@@ -53,7 +55,9 @@ public class Ship : MonoBehaviour
     //    shieldHealth = 0; //reset shields to 0
     //}
 
-    public virtual void LowerShields() { }
+    public virtual void LowerShields() {
+        shieldsUp = false;
+    }
 
     public virtual void Kill()
     {

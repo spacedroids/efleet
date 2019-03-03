@@ -26,12 +26,11 @@ public class Bolt : MonoBehaviour
         PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
         if(enemy != null)
         {
-            Debug.Log("this is" + other.gameObject.name);
-            enemy.Damage(damage, other.gameObject, energyDamageBonus);
+            enemy.Damage(damage, energyDamageBonus);
         }
         if(player != null)
         {
-            player.Damage(damage, other.gameObject, energyDamageBonus);
+            player.Damage(damage, energyDamageBonus);
         }
         //Destroy self
         Destroy(gameObject);

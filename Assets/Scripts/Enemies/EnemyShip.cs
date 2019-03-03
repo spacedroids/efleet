@@ -42,15 +42,16 @@ public class EnemyShip : Ship
         }
     }
 
-    public override void Damage(int amount, GameObject componentHit, float energyMultipler)
+    public override void Damage(int amount, float energyMultipler)
     {
-        base.Damage(amount, componentHit, energyMultipler);
+        base.Damage(amount, energyMultipler);
         healthGUI.updateText(shieldHealth.ToString(), health.ToString());
     }
 
     public override void LowerShields()
     {
         shield.SetActive(false);
+        base.LowerShields();
     }
 
     public override void Kill()

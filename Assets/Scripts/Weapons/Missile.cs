@@ -32,11 +32,11 @@ public class Missile : MonoBehaviour
         PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
         if(enemy != null)
         {
-            enemy.Damage(damage, other.gameObject, energyDamageBonus);
+            enemy.Damage(damage, energyDamageBonus);
         }
         if(player != null)
         {
-            player.Damage(damage, other.gameObject, energyDamageBonus);
+            player.Damage(damage, energyDamageBonus);
         }
     }
 }
