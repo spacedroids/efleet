@@ -24,7 +24,7 @@ public class GameplayState : GameState
         for(int i=0;i<howMany;i++) { 
             Vector2 randomOffset = Random.insideUnitCircle * 2;
             Vector3 spawnPoint = randomOffset * 1f;
-            GameObject newEmemy = Object.Instantiate(GameController.Instance.mediumEnemyPrefab, spawnPoint, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+            GameObject newEmemy = Object.Instantiate(GameController.Instance.mediumEnemyPrefab, spawnPoint, Quaternion.Euler(Random.Range(0, 360), -90, 90));
         }
     }
 
