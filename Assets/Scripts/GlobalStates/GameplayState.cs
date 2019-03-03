@@ -6,7 +6,7 @@ public class GameplayState : GameState
     private GameplaySceneManager gpsm;
     private Camera mainCamera;
 
-    private bool playerDrag;
+    private bool playerDragActive;
     private PlayerController player;
     private int waveSize;
 
@@ -39,23 +39,32 @@ public class GameplayState : GameState
         /* Input logic */
         if(Input.GetMouseButtonDown(0))
         { // if left button pressed...
+            bool playerTap = false;
+
+            //Figure out what was tapped
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out RaycastHit hit))
             {
                 PlayerController playerHit = hit.transform.GetComponentInParent<PlayerController>();
-                if(playerHit && !player.warpOverheated) {
-                    playerDrag = true;
+                if(playerHit) {
+                    playerTap = true;
                 }
-                else
-                {
-                    Debug.Log("hit non player " + hit.transform.name);
+            }
+
+            //Process the interaction
+            if(playerTap) {
+                //If player tap, start a drag to teleport interaction (if not overheated)
+                if(!player.warpOverheated) {
+                    playerDragActive = true;
                 }
+            } else {
+                //If non player tap, do weapon targeting
 
             }
         }
         if(Input.GetMouseButtonUp(0))
         {
-            if(playerDrag) {
+            if(playerDragActive) {
                 //Convert from screen to world space. Assumes gameplay plane is at z=0.
                 Vector3 newPos = mainCamera.ScreenToWorldPoint(
                  new Vector3(Input.mousePosition.x,
@@ -63,7 +72,7 @@ public class GameplayState : GameState
                  -mainCamera.transform.position.z));
                 player.transform.position = newPos;
                 player.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-                playerDrag = false;
+                playerDragActive = false;
                 player.warpCooldown();
             }
         }
