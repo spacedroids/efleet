@@ -22,10 +22,11 @@ public class Bolt : MonoBehaviour
 
     public virtual void OnCollisionEnter(Collision other)
     {
-        EnemyController enemy = other.gameObject.GetComponentInParent(typeof(EnemyController)) as EnemyController;
+        EnemyShip enemy = other.gameObject.GetComponentInParent(typeof(EnemyShip)) as EnemyShip;
         PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
         if(enemy != null)
         {
+            Debug.Log("this is" + other.gameObject.name);
             enemy.Damage(damage, other.gameObject, energyDamageBonus);
         }
         if(player != null)

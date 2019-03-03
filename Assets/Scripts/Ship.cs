@@ -9,6 +9,11 @@ public class Ship : MonoBehaviour
     public int shieldHealth;
     public int maxShieldHealth;
     public float explosionScale = 1f;
+    protected Rigidbody _rigidbody;
+
+    public virtual void Start() {
+        _rigidbody = gameObject.GetComponent<Rigidbody>();
+    }
 
     //Amount of damage, component to determine if shield or hull, energy multiplier to do extra/less damage to shields/hull
     public virtual void Damage(int amount, GameObject componentHit, float energyMultipler)

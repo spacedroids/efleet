@@ -28,7 +28,7 @@ public class Missile : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         Destroy(gameObject);
-        EnemyController enemy = other.gameObject.GetComponentInParent(typeof(EnemyController)) as EnemyController;
+        EnemyShip enemy = other.gameObject.GetComponentInParent(typeof(EnemyShip)) as EnemyShip;
         PlayerController player = other.gameObject.GetComponentInParent(typeof(PlayerController)) as PlayerController;
         if(enemy != null)
         {

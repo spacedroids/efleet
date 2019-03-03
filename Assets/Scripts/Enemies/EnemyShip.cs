@@ -11,7 +11,7 @@ public class EnemyShip : Ship
     public HealthGUI healthGUI;
     public GameObject shield;
 
-    void Start()
+    public override void Start()
     {
         health = 500;
         shieldHealth = 1000;
@@ -21,6 +21,7 @@ public class EnemyShip : Ship
         healthGUI.target = gameObject;
         healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
         healthGUI.updateText(shieldHealth.ToString(), health.ToString());
+        base.Start();
     }
 
     public override void Update()

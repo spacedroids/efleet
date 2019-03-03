@@ -17,7 +17,7 @@ public class PlayerController : Ship
     public bool warpOverheated;
     public bool secondaryOverheated;
 
-    void Start()
+    public override void Start()
     {
         health = 1000;
         explosionScale = 0.4f;
@@ -25,6 +25,7 @@ public class PlayerController : Ship
         healthGUI.target = gameObject;
         healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
         healthGUI.updateHullHealth(health.ToString());
+        base.Start();
     }
 
     public override void Update()
@@ -35,7 +36,7 @@ public class PlayerController : Ship
             sinceLastPrimaryShot += Time.deltaTime;
             if(sinceLastPrimaryShot >= primaryShotFrequency)
             {
-                //turretBattery.fire(enemy.transform.position);
+                turretBattery.fire(enemy.transform.position);
                 sinceLastPrimaryShot = 0f;
             }
             //Missiles controlled by button press
