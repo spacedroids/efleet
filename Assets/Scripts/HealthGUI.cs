@@ -25,7 +25,7 @@ public class HealthGUI : MonoBehaviour
 
     public void updateText(string shieldHealth, string hullHealth) {
         hullHealthTxt.text = hullHealth;
-        shieldHealthTxt.text = shieldHealth;
+        shieldHealthTxt.text = shieldHealth == "0" ? "" : shieldHealth;
     }
 
     public void updateHullHealth(string newText) {

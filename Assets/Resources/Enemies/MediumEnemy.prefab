@@ -100,8 +100,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7999573852817087178}
-  - component: {fileID: 3146709644438991922}
   - component: {fileID: 488953395554516116}
+  - component: {fileID: 7973201582899965771}
   m_Layer: 9
   m_Name: MediumEnemy
   m_TagString: Enemy
@@ -127,28 +127,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3146709644438991922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7999573852817087173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b28339727d0af4f47a41009c4411cc22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 0
-  shieldHealth: 0
-  maxShieldHealth: 0
-  explosionScale: 1
-  shotFrequency: 0.5
-  turretBattery: {fileID: 7999573852836421266}
-  player: {fileID: 0}
-  healthGUI: {fileID: 0}
-  shield: {fileID: 589766954}
 --- !u!54 &488953395554516116
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,6 +143,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7973201582899965771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7999573852817087173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7048d92d297bb404d8d37b404c54e1ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  shieldHealth: 0
+  maxShieldHealth: 0
+  explosionScale: 1
+  shotFrequency: 0.5
+  turretBattery: {fileID: 7999573852836421266}
+  player: {fileID: 0}
+  healthGUI: {fileID: 0}
+  shield: {fileID: 589766954}
 --- !u!1 &7999573852836421292
 GameObject:
   m_ObjectHideFlags: 0
