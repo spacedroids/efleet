@@ -41,12 +41,13 @@ public class GameplayState : GameState
         }
 
         /* Input logic */
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) || Input.touchCount > 0)
         { // if left button pressed...
             bool playerTap = false;
 
             //Figure out what was tapped
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Vector2 inputPos = Input.touchCount > 0 ? Input.GetTouch(0).position : (Vector2)Input.mousePosition;
+            Ray ray = mainCamera.ScreenPointToRay(inputPos);
             if(Physics.Raycast(ray, out RaycastHit hit))
             {
                 PlayerController playerHit = hit.transform.GetComponentInParent<PlayerController>();
@@ -76,7 +77,11 @@ public class GameplayState : GameState
              -mainCamera.transform.position.z));
             player.shootAtZone(clickPosition);
         }
-        if(Input.GetMouseButtonUp(0))
+        bool touchEnded = false;
+        if(Input.touchCount > 0) {
+            touchEnded = Input.GetTouch(0).phase == TouchPhase.Ended;
+        }
+        if(Input.GetMouseButtonUp(0) || touchEnded)
         {
             if(fireZoneDragActive) {
                 fireZoneDragActive = false;
