@@ -11,9 +11,6 @@ public class PlayerController : Ship
     public GameObject enemy;
     public HealthGUI healthGUI;
 
-    private float sinceLastPrimaryShot;
-    private float sinceLastSecondaryShot;
-
     private bool openFirePrimary;
     private Vector3 fireZonePos;
 
@@ -56,7 +53,6 @@ public class PlayerController : Ship
         }
         else
         {
-            sinceLastPrimaryShot = 0f;
             enemy = GameObject.FindGameObjectWithTag("Enemy");
         }
 
