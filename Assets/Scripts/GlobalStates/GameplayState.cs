@@ -80,8 +80,8 @@ public class GameplayState : GameState
         {
             if(fireZoneDragActive) {
                 fireZoneDragActive = false;
-                //playerFireZoneUI.SetActive(false);
-                //player.stopZoneShooting();
+                playerFireZoneUI.SetActive(false);
+                player.stopZoneShooting();
             }
             if(playerDragActive) {
                 //Convert from screen to world space. Assumes gameplay plane is at z=0.
