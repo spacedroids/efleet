@@ -6,7 +6,7 @@ public class PlayerBolt : Bolt
 {
     public override void Start()
     {
-        speed = 5;
+        speed = 7;
         energyDamageBonus = 5f;
         damage = 20;
         base.Start();
