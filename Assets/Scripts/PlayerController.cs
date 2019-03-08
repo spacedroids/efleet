@@ -8,7 +8,7 @@ public class PlayerController : Ship
     public SecondaryBattery missileBattery;
     public float primaryShotCooldownTime = 0.2f;
 
-    public GameObject enemy;
+    public Transform enemy;
     public HealthGUI healthGUI;
 
     private bool openFirePrimary;
@@ -31,6 +31,25 @@ public class PlayerController : Ship
         base.Start();
     }
 
+    Transform GetClosestEnemy(Transform[] enemies)
+    {
+        Transform bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach(Transform potentialTarget in enemies)
+        {
+            Vector3 directionToTarget = potentialTarget.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if(dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialTarget;
+            }
+        }
+
+        return bestTarget;
+    }
+
     public override void Update()
     {
         //Shooting logic
@@ -38,7 +57,7 @@ public class PlayerController : Ship
         {
             if(autoFireMode && !primaryOverheated)
             {
-                turretBattery.fire(enemy.transform.position);
+                turretBattery.fire(enemy.position);
                 primaryFireCooldown();
             }
             //Missiles controlled by button press
@@ -46,22 +65,38 @@ public class PlayerController : Ship
                 if(!secondaryOverheated)
                 {
                     GameController.Instance.missileButtonPressed = false;
-                    missileBattery.fire(enemy.transform.position);
+                    missileBattery.fire(enemy.position);
                     secondaryFireCooldown();
+                }
+            }
+            //Primary fire controlled by button press
+            if(Input.GetKey("l"))
+            {
+                if(!primaryOverheated)
+                {
+                    turretBattery.fire(enemy.position);
+                    primaryFireCooldown();
                 }
             }
         }
         else
         {
-            enemy = GameObject.FindGameObjectWithTag("Enemy");
+            GameObject[] enemiesGO = GameObject.FindGameObjectsWithTag("Enemy");
+            Transform[] enemies = new Transform[enemiesGO.Length];
+            if(enemies.Length != 0) {
+                for(int i=0;i<enemies.Length;i++) {
+                    enemies[i] = enemiesGO[i].transform;
+                }
+            }
+            enemy = GetClosestEnemy(enemies);
         }
 
         /* Fire zone gameplay test */
-        if(openFirePrimary && !primaryOverheated)
-        {
-            turretBattery.fire(fireZonePos);
-            primaryFireCooldown();
-        }
+        //if(openFirePrimary && !primaryOverheated)
+        //{
+        //    turretBattery.fire(fireZonePos);
+        //    primaryFireCooldown();
+        //}
 
     }
 

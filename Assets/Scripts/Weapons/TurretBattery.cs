@@ -18,7 +18,7 @@ public class TurretBattery : MonoBehaviour
         }
     }
 
-    public void fire(Vector3 direction) {
+    public void fire(Vector3 direction, float intensity=1f) {
         foreach(BoltTurret turret in turrets) {
             Vector2 offset = Random.insideUnitCircle * 0.5f;
             Vector3 offsetV3 = new Vector3(offset.x, offset.y, 0);
