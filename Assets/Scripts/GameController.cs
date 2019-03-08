@@ -20,11 +20,14 @@ public class GameController : MonoSingleton<GameController> {
 	public GameState nextStateOnLoaded;
 
     public GameObject smallExplosionPrefab;
-    public GameObject mediumEnemyPrefab;
     public GameObject healthGUI;
     public GameObject missilePrefab;
     public GameObject boltPrefab;
     public GameObject enemyBoltPrefab;
+
+    public GameObject mediumEnemyPrefab;
+    public GameObject chaserEnemyPrefab;
+    public GameObject[] enemyPrefabs;
 
 	//Navigation/Event Flags
     public bool newGamePressed;
@@ -39,12 +42,15 @@ public class GameController : MonoSingleton<GameController> {
 
 	protected override void Awake() {
         smallExplosionPrefab = (GameObject)Resources.Load("Explosions/SmallExplosion");
-        mediumEnemyPrefab = (GameObject)Resources.Load("Enemies/MediumEnemy");
         healthGUI = (GameObject)Resources.Load("GUI/HealthGUI");
         boltPrefab = (GameObject)Resources.Load("Shots/Bolt");
         enemyBoltPrefab = (GameObject)Resources.Load("Shots/EnemyBolt");
         missilePrefab = (GameObject)Resources.Load("Shots/Missile");
         //missilePrefab = (GameObject)Resources.Load("Shots/Torpedo");
+
+        mediumEnemyPrefab = (GameObject)Resources.Load("Enemies/MediumEnemy");
+        chaserEnemyPrefab = (GameObject)Resources.Load("Enemies/ChaserEnemy");
+        enemyPrefabs = new GameObject[] { mediumEnemyPrefab, chaserEnemyPrefab };
 
         //Base 'MonoSingleton' class will setup this object as `DontDestroyOnLoad`
         base.Awake();

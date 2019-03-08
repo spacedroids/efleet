@@ -52,7 +52,6 @@ public class GameplayCamera : MonoBehaviour
 
         if(fracJourney > 0.9)
         {
-            Debug.Log("camera refollow");
             StartFollow(player.transform);
         }
     }

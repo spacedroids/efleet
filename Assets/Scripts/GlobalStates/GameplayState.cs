@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameplayState : GameState
 {
@@ -26,9 +27,13 @@ public class GameplayState : GameState
     //Spawn a new medium enemy with a random offset from location 0,0
     private void spawnEnemy(int howMany) {
         for(int i=0;i<howMany;i++) { 
-            Vector2 randomOffset = Random.insideUnitCircle * 2;
+            Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * 2;
             Vector3 spawnPoint = randomOffset * 1f;
-            GameObject newEmemy = Object.Instantiate(GameController.Instance.mediumEnemyPrefab, spawnPoint, Quaternion.Euler(Random.Range(0, 360), -90, 90));
+            System.Random random = new System.Random();
+            
+            int index = random.Next(GameController.Instance.enemyPrefabs.Length);
+            GameObject prefabEnemy = GameController.Instance.enemyPrefabs[index];
+            GameObject newEmemy = UnityEngine.Object.Instantiate(prefabEnemy, spawnPoint, Quaternion.Euler(UnityEngine.Random.Range(0, 360), -90, 90));
         }
     }
 
@@ -95,7 +100,7 @@ public class GameplayState : GameState
                  Input.mousePosition.y,
                  -mainCamera.transform.position.z));
                 player.transform.position = newPos;
-                player.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+                player.transform.rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360));
                 playerDragActive = false;
                 player.warpCooldown();
             }
