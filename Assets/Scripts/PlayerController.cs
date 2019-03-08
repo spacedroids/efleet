@@ -6,7 +6,7 @@ public class PlayerController : Ship
 {
     public TurretBattery turretBattery;
     public SecondaryBattery missileBattery;
-    public float primaryShotFrequency = 0.2f;
+    public float primaryShotCooldownTime = 0.2f;
 
     public GameObject enemy;
     public HealthGUI healthGUI;
@@ -102,7 +102,7 @@ public class PlayerController : Ship
         StartCoroutine(primaryFireCooldownCoroutine);
     }
     private IEnumerator coolDownPrimary() {
-        yield return new WaitForSeconds(primaryShotFrequency);
+        yield return new WaitForSeconds(primaryShotCooldownTime);
         primaryOverheated = false;
     }
 
