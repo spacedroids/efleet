@@ -20,6 +20,8 @@ public class PlayerController : Ship
     public bool secondaryOverheated;
     public bool primaryOverheated;
 
+    private int primaryShotState;
+
     public override void Start()
     {
         health = 1000;
@@ -58,7 +60,7 @@ public class PlayerController : Ship
             if(autoFireMode && !primaryOverheated)
             {
                 turretBattery.fire(enemy.position);
-                primaryFireCooldown();
+                primaryFireCooldown(primaryShotCooldownTime);
             }
             //Missiles controlled by button press
             if(GameController.Instance.missileButtonPressed || Input.GetKey("m")) {
@@ -69,17 +71,48 @@ public class PlayerController : Ship
                     secondaryFireCooldown();
                 }
             }
+
+            float regularCooldown = 0.3f;
+            float postComboRecover = 0.6f;
             //Primary fire controlled by button press
-            if(Input.GetKey("l"))
+            if(Input.GetKeyDown("l"))
             {
+                switch(primaryShotState) {
+                    case 0: //No combo/starting state
+                        fireAndCool(enemy.position, regularCooldown);
+                        primaryShotState = 1;
+                        break;
+                    case 1: //Combo step 1
+                        if(!primaryOverheated) {
+                            fireAndCool(enemy.position, regularCooldown);
+                            primaryShotState = 2; //Move to final combo stage
+                        }
+                        else //shot attempt while overheated
+                        { 
+                            primaryShotState = 0; //Combo breaker
+                        }
+                        break;
+                    case 2: //Combo ready...
+                        if(!primaryOverheated)
+                        {
+                            fireAndCool(enemy.position, postComboRecover);
+                            missileBattery.fire(enemy.position);
+                            primaryShotState = 0; //Combo achieved
+                        }
+                        else //shot attempt while overheated
+                        {
+                            primaryShotState = 0; //Combo breaker
+                        }
+                        break;
+                }
                 if(!primaryOverheated)
                 {
                     turretBattery.fire(enemy.position);
-                    primaryFireCooldown();
+                    primaryFireCooldown(primaryShotCooldownTime);
                 }
             }
         }
-        else
+        else if(enemy == null)
         {
             GameObject[] enemiesGO = GameObject.FindGameObjectsWithTag("Enemy");
             Transform[] enemies = new Transform[enemiesGO.Length];
@@ -95,9 +128,14 @@ public class PlayerController : Ship
         //if(openFirePrimary && !primaryOverheated)
         //{
         //    turretBattery.fire(fireZonePos);
-        //    primaryFireCooldown();
+        //    primaryFireCooldown(primaryShotCooldownTime);
         //}
 
+    }
+
+    private void fireAndCool(Vector3 target, float coolingTime) {
+        turretBattery.fire(target);
+        primaryFireCooldown(coolingTime);
     }
 
     public override void Damage(int amount, float energyMultipler)
@@ -131,13 +169,13 @@ public class PlayerController : Ship
 
     /* Primary fire cool down coroutine logic */
     private IEnumerator primaryFireCooldownCoroutine;
-    public void primaryFireCooldown() {
+    public void primaryFireCooldown(float coolingTime) {
         primaryOverheated = true;
-        primaryFireCooldownCoroutine = coolDownPrimary();
+        primaryFireCooldownCoroutine = coolDownPrimary(coolingTime);
         StartCoroutine(primaryFireCooldownCoroutine);
     }
-    private IEnumerator coolDownPrimary() {
-        yield return new WaitForSeconds(primaryShotCooldownTime);
+    private IEnumerator coolDownPrimary(float coolingTime) {
+        yield return new WaitForSeconds(coolingTime);
         primaryOverheated = false;
     }
 
