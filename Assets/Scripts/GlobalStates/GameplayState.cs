@@ -103,6 +103,7 @@ public class GameplayState : GameState
                 player.transform.rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360));
                 playerDragActive = false;
                 player.warpCooldown();
+                mainCamera.GetComponent<GameplayCamera>().StartFollow(player.transform);
             }
         }
 

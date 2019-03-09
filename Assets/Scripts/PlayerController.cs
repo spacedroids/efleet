@@ -55,7 +55,7 @@ public class PlayerController : Ship
     public override void Update()
     {
         //Shooting logic
-        if(enemy != null && !warpOverheated)
+        if(enemy != null)
         {
             if(autoFireMode && !primaryOverheated)
             {
@@ -79,12 +79,12 @@ public class PlayerController : Ship
             {
                 switch(primaryShotState) {
                     case 0: //No combo/starting state
-                        fireAndCool(enemy.position, regularCooldown);
+                        fireAndCool(enemy.position, regularCooldown, 0.2f);
                         primaryShotState = 1;
                         break;
                     case 1: //Combo step 1
                         if(!primaryOverheated) {
-                            fireAndCool(enemy.position, regularCooldown);
+                            fireAndCool(enemy.position, regularCooldown, 0.2f);
                             primaryShotState = 2; //Move to final combo stage
                         }
                         else //shot attempt while overheated
@@ -95,7 +95,7 @@ public class PlayerController : Ship
                     case 2: //Combo ready...
                         if(!primaryOverheated)
                         {
-                            fireAndCool(enemy.position, postComboRecover);
+                            fireAndCool(enemy.position, postComboRecover, 1f);
                             missileBattery.fire(enemy.position);
                             primaryShotState = 0; //Combo achieved
                         }
@@ -133,8 +133,8 @@ public class PlayerController : Ship
 
     }
 
-    private void fireAndCool(Vector3 target, float coolingTime) {
-        turretBattery.fire(target);
+    private void fireAndCool(Vector3 target, float coolingTime, float intensity) {
+        turretBattery.fire(target, intensity);
         primaryFireCooldown(coolingTime);
     }
 
@@ -163,7 +163,7 @@ public class PlayerController : Ship
     }
     private IEnumerator coolDownWarp()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0f);
         warpOverheated = false;
     }
 

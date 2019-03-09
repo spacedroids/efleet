@@ -19,10 +19,11 @@ public class TurretBattery : MonoBehaviour
     }
 
     public void fire(Vector3 direction, float intensity=1f) {
-        foreach(BoltTurret turret in turrets) {
+        int salvoSize = (int)(turrets.Count * intensity);
+        for(int i=0;i<salvoSize;i++) {
             Vector2 offset = Random.insideUnitCircle * 0.5f;
             Vector3 offsetV3 = new Vector3(offset.x, offset.y, 0);
-            turret.fire(direction + offsetV3);
+            turrets[i].fire(direction + offsetV3);
         }
     }
 }

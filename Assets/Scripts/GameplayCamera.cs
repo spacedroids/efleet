@@ -25,7 +25,7 @@ public class GameplayCamera : MonoBehaviour
     // Total distance between the markers.
     private float journeyLength;
 
-    void StartFollow(Transform target)
+    public void StartFollow(Transform target)
     {
         endMarker = target.position;
         endMarker.z = transform.position.z;
@@ -50,9 +50,9 @@ public class GameplayCamera : MonoBehaviour
         // Set our position as a fraction of the distance between the markers.
         transform.position = Vector3.Lerp(startMarker.position, endMarker, fracJourney);
 
-        if(fracJourney > 0.9)
-        {
-            StartFollow(player.transform);
-        }
+        //if(fracJourney > 0.9)
+        //{
+        //    StartFollow(player.transform);
+        //}
     }
 }
