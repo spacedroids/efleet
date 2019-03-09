@@ -20,8 +20,10 @@ public class PlayerController : Ship
     public bool warpOverheated;
     public bool secondaryOverheated;
     public bool primaryOverheated;
+    public bool powerComboWarmingUp;
+    public bool powerComboReady;
 
-    private int primaryShotState;
+    private int primaryComboState;
 
     public override void Start()
     {
@@ -58,7 +60,6 @@ public class PlayerController : Ship
 
     public override void Update()
     {
-        comboGUI.updateIntensity(primaryShotState);
         //Shooting logic
         if(enemy != null)
         {
@@ -77,43 +78,47 @@ public class PlayerController : Ship
                 }
             }
 
-            float regularCooldown = 0.3f;
+            float regularCooldown = 0.1f;
             float postComboRecover = 0.6f;
             //Primary fire controlled by button press
             if(Input.GetKeyDown("l"))
             {
-                switch(primaryShotState) {
+                switch(primaryComboState) {
                     case 0: //No combo/starting state
-                        fireAndCool(enemy.position, regularCooldown, 0.2f);
-                        primaryShotState = 1;
+                        if(!primaryOverheated) { 
+                            fireAndCool(enemy.position, regularCooldown, 0.2f);
+                            primaryComboState = 1;
+                            comboGUI.updateIntensity(primaryComboState);
+                            powerComboWarmUp(0.3f);
+                        }
                         break;
-                    case 1: //Combo step 1
-                        if(!primaryOverheated) {
+                    case 1: //First shot already away
+                        if(powerComboReady) { //Just right
                             fireAndCool(enemy.position, regularCooldown, 0.6f);
-                            primaryShotState = 2; //Move to final combo stage
+                            powerComboWarmUp(0.3f);
+                            primaryComboState = 2; //Move to final combo stage
+                            comboGUI.updateIntensity(primaryComboState);
                         }
-                        else //shot attempt while overheated
-                        { 
-                            primaryShotState = 0; //Combo breaker
+                        else { //Too slow or too fast
+                            fireAndCool(enemy.position, regularCooldown, 0.2f);
+                            powerComboWarmUp(0.3f);
                         }
                         break;
-                    case 2: //Combo ready...
-                        if(!primaryOverheated)
-                        {
+                    case 2: //Second shot already away
+                        if(powerComboReady) { //COMBO ACHIEVED
                             fireAndCool(enemy.position, postComboRecover, 1f);
                             missileBattery.fire(enemy.position);
-                            primaryShotState = 0; //Combo achieved
+                            primaryComboState = 0; //Combo achieved
+                            comboGUI.updateIntensity(3);
                         }
                         else //shot attempt while overheated
                         {
-                            primaryShotState = 0; //Combo breaker
+                            fireAndCool(enemy.position, regularCooldown, 0.2f);
+                            powerComboWarmUp(0.3f);
+                            primaryComboState = 1; //Combo breaker
+                            comboGUI.updateIntensity(primaryComboState);
                         }
                         break;
-                }
-                if(!primaryOverheated)
-                {
-                    turretBattery.fire(enemy.position);
-                    primaryFireCooldown(primaryShotCooldownTime);
                 }
             }
         }
@@ -139,8 +144,10 @@ public class PlayerController : Ship
     }
 
     private void fireAndCool(Vector3 target, float coolingTime, float intensity) {
-        turretBattery.fire(target, intensity);
-        primaryFireCooldown(coolingTime);
+        if(!primaryOverheated) { 
+            turretBattery.fire(target, intensity);
+            primaryFireCooldown(coolingTime);
+        }
     }
 
     public override void Damage(int amount, float energyMultipler)
@@ -201,5 +208,39 @@ public class PlayerController : Ship
         secondaryOverheated = false;
     }
 
+    /* Power combo timer coroutine logic */
+    private IEnumerator powerComboWarmUpCoroutine;
+    public void powerComboWarmUp(float timer) {
+        powerComboWarmingUp = true;
+        if(powerComboWarmUpCoroutine != null)
+        {
+            StopCoroutine(powerComboWarmUpCoroutine);
+        }
+        powerComboWarmUpCoroutine = comboWarmup(timer);
+        StartCoroutine(powerComboWarmUpCoroutine);
+    }
+    private IEnumerator comboWarmup(float duration) {
+        yield return new WaitForSeconds(duration);
+        powerComboWarmingUp = false;
+        powerComboReadyCooldown(0.3f); //Start timer on combo ready, so that we can check if the user hits the button during this time window
+    }
+
+    /* Power combo timer coroutine logic */
+    private IEnumerator powerComboReadyCoroutine;
+    public void powerComboReadyCooldown(float timer)
+    {
+        powerComboReady = true;
+        if(powerComboReadyCoroutine != null)
+        {
+            StopCoroutine(powerComboReadyCoroutine);
+        }
+        powerComboReadyCoroutine = comboReadyStart(timer);
+        StartCoroutine(powerComboReadyCoroutine);
+    }
+    private IEnumerator comboReadyStart(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        powerComboReady = false;
+    }
 
 }
