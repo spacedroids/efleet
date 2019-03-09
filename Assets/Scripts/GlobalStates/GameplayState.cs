@@ -67,20 +67,7 @@ public class GameplayState : GameState
                 if(!player.warpOverheated) {
                     playerDragActive = true;
                 }
-            } else {
-                //If non player tap, do fire zone targeting
-                playerFireZoneUI.SetActive(true);
-                fireZoneDragActive = true;
             }
-        }
-        //While holding down for fire zone
-        if(fireZoneDragActive) {
-            playerFireZoneUI.transform.position = Input.mousePosition;
-            Vector3 clickPosition = mainCamera.ScreenToWorldPoint(
-             new Vector3(Input.mousePosition.x,
-             Input.mousePosition.y,
-             -mainCamera.transform.position.z));
-            player.shootAtZone(clickPosition);
         }
         bool touchEnded = false;
         if(Input.touchCount > 0) {
@@ -88,11 +75,6 @@ public class GameplayState : GameState
         }
         if(Input.GetMouseButtonUp(0) || touchEnded)
         {
-            if(fireZoneDragActive) {
-                fireZoneDragActive = false;
-                playerFireZoneUI.SetActive(false);
-                player.stopZoneShooting();
-            }
             if(playerDragActive) {
                 //Convert from screen to world space. Assumes gameplay plane is at z=0.
                 Vector3 newPos = mainCamera.ScreenToWorldPoint(

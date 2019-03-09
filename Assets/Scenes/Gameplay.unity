@@ -2034,9 +2034,10 @@ MonoBehaviour:
   explosionScale: 1
   turretBattery: {fileID: 869176149}
   missileBattery: {fileID: 222877003}
-  primaryShotFrequency: 0.2
+  primaryShotCooldownTime: 0.2
   enemy: {fileID: 0}
   healthGUI: {fileID: 0}
+  comboGUI: {fileID: 0}
   autoFireMode: 0
   warpOverheated: 0
   secondaryOverheated: 0

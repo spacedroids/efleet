@@ -10,6 +10,7 @@ public class PlayerController : Ship
 
     public Transform enemy;
     public HealthGUI healthGUI;
+    public TextoutGUI comboGUI;
 
     private bool openFirePrimary;
     private Vector3 fireZonePos;
@@ -30,6 +31,9 @@ public class PlayerController : Ship
         healthGUI.target = gameObject;
         healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
         healthGUI.updateHullHealth(health.ToString());
+        comboGUI = Instantiate(GameController.Instance.textoutGUI).GetComponent<TextoutGUI>();
+        comboGUI.target = gameObject;
+        comboGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
         base.Start();
     }
 
@@ -54,6 +58,7 @@ public class PlayerController : Ship
 
     public override void Update()
     {
+        comboGUI.updateIntensity(primaryShotState);
         //Shooting logic
         if(enemy != null)
         {
@@ -84,7 +89,7 @@ public class PlayerController : Ship
                         break;
                     case 1: //Combo step 1
                         if(!primaryOverheated) {
-                            fireAndCool(enemy.position, regularCooldown, 0.2f);
+                            fireAndCool(enemy.position, regularCooldown, 0.6f);
                             primaryShotState = 2; //Move to final combo stage
                         }
                         else //shot attempt while overheated
@@ -171,6 +176,9 @@ public class PlayerController : Ship
     private IEnumerator primaryFireCooldownCoroutine;
     public void primaryFireCooldown(float coolingTime) {
         primaryOverheated = true;
+        if(primaryFireCooldownCoroutine != null) { 
+            StopCoroutine(primaryFireCooldownCoroutine);
+        }
         primaryFireCooldownCoroutine = coolDownPrimary(coolingTime);
         StartCoroutine(primaryFireCooldownCoroutine);
     }
