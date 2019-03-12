@@ -28,6 +28,7 @@ public class GameController : MonoSingleton<GameController> {
 
     public GameObject mediumEnemyPrefab;
     public GameObject chaserEnemyPrefab;
+    public GameObject weakEnemyPrefab;
     public GameObject[] enemyPrefabs;
 
 	//Navigation/Event Flags
@@ -52,7 +53,8 @@ public class GameController : MonoSingleton<GameController> {
 
         mediumEnemyPrefab = (GameObject)Resources.Load("Enemies/MediumEnemy");
         chaserEnemyPrefab = (GameObject)Resources.Load("Enemies/ChaserEnemy");
-        enemyPrefabs = new GameObject[] { mediumEnemyPrefab, chaserEnemyPrefab };
+        weakEnemyPrefab = (GameObject)Resources.Load("Enemies/WeakEnemy");
+        enemyPrefabs = new GameObject[] { mediumEnemyPrefab, chaserEnemyPrefab, weakEnemyPrefab };
 
         //Base 'MonoSingleton' class will setup this object as `DontDestroyOnLoad`
         base.Awake();

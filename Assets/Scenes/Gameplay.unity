@@ -1456,7 +1456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1251336700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2042,6 +2042,8 @@ MonoBehaviour:
   warpOverheated: 0
   secondaryOverheated: 0
   primaryOverheated: 0
+  powerComboWarmingUp: 0
+  powerComboReady: 0
 --- !u!4 &2016860710
 Transform:
   m_ObjectHideFlags: 0

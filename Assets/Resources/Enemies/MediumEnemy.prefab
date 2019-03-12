@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7999573852817087178}
   - component: {fileID: 488953395554516116}
-  - component: {fileID: 7973201582899965771}
+  - component: {fileID: 2834740478081267971}
   m_Layer: 9
   m_Name: MediumEnemy
   m_TagString: Enemy
@@ -143,7 +143,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7973201582899965771
+--- !u!114 &2834740478081267971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7999573852817087173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7048d92d297bb404d8d37b404c54e1ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 1204ca209705849a893fb0304da682b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0

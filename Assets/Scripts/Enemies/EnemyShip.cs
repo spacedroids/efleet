@@ -13,14 +13,11 @@ public class EnemyShip : Ship
 
     public override void Start()
     {
-        health = 500;
-        shieldHealth = 1000;
-        explosionScale = 0.2f;
         player = GameObject.Find("Player");
         healthGUI = Instantiate(GameController.Instance.healthGUI).GetComponent<HealthGUI>();
         healthGUI.target = gameObject;
         healthGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
-        healthGUI.updateText(shieldHealth.ToString(), health.ToString());
+        turretBattery = gameObject.GetComponentInChildren<TurretBattery>();
         base.Start();
     }
 

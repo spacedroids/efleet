@@ -14,7 +14,6 @@ public class Ship : MonoBehaviour
 
     public virtual void Start() {
         _rigidbody = gameObject.GetComponent<Rigidbody>();
-        shieldsUp = true;
     }
 
     //Amount of damage, component to determine if shield or hull, energy multiplier to do extra/less damage to shields/hull
