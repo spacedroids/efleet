@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Ship
 {
+    public PlayerShield pshield;
     public TurretBattery turretBattery;
     public SecondaryBattery missileBattery;
     public float primaryShotCooldownTime = 0.2f;
@@ -36,6 +37,8 @@ public class PlayerController : Ship
         comboGUI = Instantiate(GameController.Instance.textoutGUI).GetComponent<TextoutGUI>();
         comboGUI.target = gameObject;
         comboGUI.transform.SetParent(GameObject.FindGameObjectWithTag("MainCanvas").transform, false);
+        pshield = gameObject.GetComponentInChildren<PlayerShield>();
+        pshield.disable();
         base.Start();
     }
 
@@ -60,6 +63,11 @@ public class PlayerController : Ship
 
     public override void Update()
     {
+        //Shield logic
+        if(Input.GetKeyDown("k")) {
+            enableShield(1f);
+        }
+
         //Shooting logic
         if(enemy != null)
         {
@@ -164,6 +172,27 @@ public class PlayerController : Ship
     public void stopZoneShooting()
     {
         openFirePrimary = false;
+    }
+
+    /* Shield cooldown coroutine logic */
+    private IEnumerator shieldTimerCoroutine;
+    public void enableShield(float shieldDuration)
+    {
+        shieldsUp = true;
+        shieldHealth = 1000;
+        pshield.enable();
+        if(shieldTimerCoroutine != null)
+        {
+            StopCoroutine(shieldTimerCoroutine);
+        }
+        shieldTimerCoroutine = shieldTimer(shieldDuration);
+        StartCoroutine(shieldTimerCoroutine);
+    }
+    private IEnumerator shieldTimer(float shieldDuration)
+    {
+        yield return new WaitForSeconds(shieldDuration);
+        pshield.disable();
+        shieldsUp = false;
     }
 
     /* Warp cool down coroutine logic */
