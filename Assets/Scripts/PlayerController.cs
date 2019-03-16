@@ -160,6 +160,9 @@ public class PlayerController : Ship
 
     public override void Damage(int amount, float energyMultipler)
     {
+        if(!shieldsUp) { //If took hull damage
+            Camera.main.GetComponent<GameplayCamera>().screenShake(amount);
+        }
         base.Damage(amount, energyMultipler);
         healthGUI.updateHullHealth(health.ToString());
     }

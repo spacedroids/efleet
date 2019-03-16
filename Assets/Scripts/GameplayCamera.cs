@@ -6,6 +6,12 @@ public class GameplayCamera : MonoBehaviour
 {
     protected GameObject player;
 
+    //Screen shake vars
+    public float shakeAmount = 0.1f;
+    public float decreaseFactor = 5.0f;
+    public float maxShake = 200;
+    public float shakeTimer;
+
     public void Start()
     {
         player = GameObject.Find("Player");
@@ -36,6 +42,27 @@ public class GameplayCamera : MonoBehaviour
 
         // Calculate the journey length.
         journeyLength = Vector3.Distance(startMarker.position, endMarker);
+    }
+
+    public void screenShake(float amount)
+    {
+        amount = Mathf.Clamp(amount, -maxShake, maxShake);
+            shakeAmount = amount * 0.01f;
+            shakeTimer = 2.0f;
+            Debug.Log("shake " + shakeAmount);
+    }
+
+    void LateUpdate()
+    {
+        if(shakeTimer > 0)
+        {
+            transform.localPosition += Random.insideUnitSphere * shakeAmount;
+            shakeTimer -= Time.deltaTime * decreaseFactor;
+        }
+        else
+        {
+            shakeTimer = 0.0f;
+        }
     }
 
     // Follows the target position like with a spring
